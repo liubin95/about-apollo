@@ -14,11 +14,6 @@ type Query {
     actor(id: ID!): Actor
     searchActors(name: String!): [Actor!]
 }
-query GetMovies{
-    movies {
-        ...MovieOut
-    }
-}
 
 type Mutation {
     createMovie(input:MovieInput): Movie!
@@ -35,15 +30,6 @@ type Movie{
     releaseDate: Int!
     category: Category!
     actors: [Actor!]!
-}
-fragment MovieOut on Movie{
-    title
-    releaseDate
-    category
-    actors{
-        name
-        gender
-    }
 }
 enum Category{
     ACTION

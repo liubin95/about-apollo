@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "generate": "graphql-codegen-esm --config codegen.yml",
-    "compile": "tsc",
-    "dev": "pnpm run generate && pnpm run compile && node ./dist/index.js"
+    "build": "tsc",
+    "dev": "pnpm run generate && pnpm run build && node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
