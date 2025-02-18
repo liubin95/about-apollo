@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import { gql } from '@/__generated__'
 import { useQuery } from '@vue/apollo-composable'
 import { onMounted } from 'vue'
@@ -23,15 +23,14 @@ onMounted(() => {
 })
 </script>
 <template>
-  <div class='about'>
+  <div class="about">
     <h1>This is an about page</h1>
-    <div v-if='loading'>Loading...</div>
-
-    <ul v-else-if='result && result.movie'>
-      <li v-for='key in result.movie' :key='key'>
-        {{ key }}: {{ result.movie[key] }}
-      </li>
-    </ul>
+    <div v-if="loading">Loading...</div>
+    <div v-else>
+      <p>
+        <span>{{ result?.movie?.title }}</span> : <span>{{ result?.movie?.releaseDate }}</span>
+      </p>
+    </div>
   </div>
 </template>
 

@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "turbo dev",
-    "build": "turbo build"
+    "build": "turbo build",
+    "format": "turbo format",
+    "generate": "turbo generate",
+    "clean": "turbo clean",
+    "clean:all": "turbo clean:all"
   },
   "keywords": [],
   "author": "",

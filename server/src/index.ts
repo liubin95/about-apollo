@@ -1,6 +1,6 @@
 import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
-import { GraphQLError } from 'graphql';
+import { GraphQLError } from 'graphql'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 // This is the file where our generated types live
@@ -26,17 +26,22 @@ const resolvers: Resolvers = {
     movie: async (_, { id }, { userId, scopes }) => {
       // 在这里添加你的查询逻辑
       // 返回电影数据
-      return { id, title: `Inception ${userId}`, releaseDate: 2010, category: Category.Action, actors: [] }
-    }
-  }
+      return {
+        id,
+        title: `Inception ${userId}`,
+        releaseDate: 2010,
+        category: Category.Action,
+        actors: [],
+      }
+    },
+  },
 }
-
 
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
 const server = new ApolloServer<MyContext>({
   typeDefs,
-  resolvers
+  resolvers,
 })
 
 // Passing an ApolloServer instance to the `startStandaloneServer` function:
@@ -53,19 +58,18 @@ const { url } = await startStandaloneServer(server, {
     const scopes = ['movies:read', 'movies:write'] // 从 token 中提取作用域
     // optionally block the user
     // we could also check user roles/permissions here
-    if (!userId)
+    if (!userId) {
       // throwing a `GraphQLError` here allows us to specify an HTTP status code,
       // standard `Error`s will have a 500 status code by default
-    {
       throw new GraphQLError('User is not authenticated', {
         extensions: {
           code: 'UNAUTHENTICATED',
-          http: { status: 401 }
-        }
+          http: { status: 401 },
+        },
       })
     }
     return { userId, scopes }
-  }
+  },
 })
 
 console.log(`🚀  Server ready at: ${url}`)
