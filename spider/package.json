@@ -5,7 +5,8 @@
   "main": "main.ts",
   "type": "module",
   "scripts": {
-    "start": "tsx src/main.ts"
+    "movie": "tsx src/movie.ts",
+    "actor": "tsx src/actor.ts"
   },
   "keywords": [],
   "author": "",

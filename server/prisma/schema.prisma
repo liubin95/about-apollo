@@ -36,7 +36,7 @@ model Movie {
   id          Int        @id @default(autoincrement())
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  title       String
+  title       String     @unique
   releaseDate Int
   category    Category[] @relation("MovieCategory")
   actors      Actor[]    @relation("MovieActors")
@@ -50,7 +50,7 @@ model Actor {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  name      String
+  name      String   @unique
   gender    Gender   @default(MALE)
   movies    Movie[]  @relation("MovieActors")
 }
