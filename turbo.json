@@ -9,10 +9,20 @@
         "dist/**"
       ]
     },
-    "generate": {},
-    "format": {},
-    "clean": {},
-    "clean:all": {},
+    "generate": {
+      "outputs": [
+        "src/__generated__/**"
+      ]
+    },
+    "format": {
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    },
+    "clean:all": {
+      "cache": false
+    },
     "dev": {
       "dependsOn": [
         "generate",

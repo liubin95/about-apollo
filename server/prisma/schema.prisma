@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Category {
+  ACTION
+  COMEDY
+  DRAMA
+  FANTASY
+  HORROR
+  MYSTERY
+  ROMANCE
+  THRILLER
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model Movie {
+  id          Int      @id @default(autoincrement())
+  title       String
+  releaseDate Int
+  category    Category
+  actors      Actor[]  @relation("MovieActors")
+
+  @@index([title])
+  @@index([releaseDate])
+}
+
+model Actor {
+  id     Int     @id @default(autoincrement())
+  name   String
+  gender Gender  @default(MALE)
+  movies Movie[] @relation("MovieActors")
+}

@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "engine-strict": true,
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",

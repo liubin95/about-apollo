@@ -3,20 +3,17 @@ import { gql } from '@/__generated__'
 import { useQuery } from '@vue/apollo-composable'
 import { onMounted } from 'vue'
 
-const GetMovie = gql(/* GraphQL */ `
-  query GetMovie($movieId: ID!) {
-    movie(id: $movieId) {
+const GetMovies = gql(/* GraphQL */ `
+  query Movies {
+    movies {
       title
       releaseDate
       category
-      actors {
-        name
-      }
     }
   }
 `)
 
-const { result, loading } = useQuery(GetMovie, { movieId: '100' })
+const { result, loading } = useQuery(GetMovies)
 
 onMounted(() => {
   console.log('MovieList mounted')
@@ -27,8 +24,8 @@ onMounted(() => {
     <h1>This is an about page</h1>
     <div v-if="loading">Loading...</div>
     <div v-else>
-      <p>
-        <span>{{ result?.movie?.title }}</span> : <span>{{ result?.movie?.releaseDate }}</span>
+      <p v-for="(movie, index) in result?.movies" :key="index">
+        {{ movie.title }} - {{ movie.releaseDate }} - {{ movie.category }}
       </p>
     </div>
   </div>

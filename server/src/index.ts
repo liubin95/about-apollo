@@ -1,11 +1,13 @@
 import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
+import { Movie } from '@prisma/client'
 import { GraphQLError } from 'graphql'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 // This is the file where our generated types live
 // (specified in our `codegen.yml` file)
-import { Resolvers, Category } from './__generated__/resolvers-types.js'
+import { Resolvers } from './__generated__/resolvers-types.js'
+import { prisma } from './database.js'
 
 // deal __dirname is not defined
 const __dirname = import.meta.dirname
@@ -23,15 +25,24 @@ export interface MyContext {
 // 这里定义你的 GraphQL resolvers
 const resolvers: Resolvers = {
   Query: {
+    movies: async (_, __) => {
+      const movies = await prisma.movie.findMany()
+      console.log(_)
+      console.log(__)
+      return movies
+    },
     movie: async (_, { id }, { userId, scopes }) => {
       // 在这里添加你的查询逻辑
+
       // 返回电影数据
+      const movie: Movie = await prisma.movie.findFirst({
+        where: {
+          id: 10,
+        },
+      })
+
       return {
-        id,
-        title: `Inception ${userId}`,
-        releaseDate: 2010,
-        category: Category.Action,
-        actors: [],
+        ...movie,
       }
     },
   },
