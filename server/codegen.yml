@@ -16,6 +16,7 @@ generates:
       mappers:
         Movie: "@prisma/client#Movie as MovieModel"
         Actor: "@prisma/client#Actor as ActorModel"
+        Category: "@prisma/client#Category as CategoryModel"
+        Country: "@prisma/client#Country as CountryModel"
       enumValues:
-        Category: "@prisma/client#Category"
         Gender: "@prisma/client#Gender"

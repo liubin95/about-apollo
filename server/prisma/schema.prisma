@@ -6,19 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
-}
-
-enum Category {
-  ACTION
-  COMEDY
-  DRAMA
-  FANTASY
-  HORROR
-  MYSTERY
-  ROMANCE
-  THRILLER
+  provider     = "sqlite"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 enum Gender {
@@ -26,20 +16,41 @@ enum Gender {
   FEMALE
 }
 
+model Category {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String   @unique
+  Movie     Movie[]  @relation("MovieCategory")
+}
+
+model Country {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String   @unique
+  Movie     Movie[]  @relation("MovieCountry")
+}
+
 model Movie {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   title       String
   releaseDate Int
-  category    Category
-  actors      Actor[]  @relation("MovieActors")
+  category    Category[] @relation("MovieCategory")
+  actors      Actor[]    @relation("MovieActors")
+  country     Country[]  @relation("MovieCountry")
 
   @@index([title])
   @@index([releaseDate])
 }
 
 model Actor {
-  id     Int     @id @default(autoincrement())
-  name   String
-  gender Gender  @default(MALE)
-  movies Movie[] @relation("MovieActors")
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  gender    Gender   @default(MALE)
+  movies    Movie[]  @relation("MovieActors")
 }

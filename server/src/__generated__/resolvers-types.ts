@@ -1,7 +1,6 @@
-import { Category } from '@prisma/client';
 import { Gender } from '@prisma/client';
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { Movie as MovieModel, Actor as ActorModel } from '@prisma/client';
+import { Movie as MovieModel, Actor as ActorModel, Category as CategoryModel, Country as CountryModel } from '@prisma/client';
 import { MyContext } from '../index.js';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -36,14 +35,25 @@ export type ActorInput = {
   name: Scalars['String']['input'];
 };
 
-export { Category };
+export type Category = {
+  __typename?: 'Category';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type Country = {
+  __typename?: 'Country';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
 
 export { Gender };
 
 export type Movie = {
   __typename?: 'Movie';
   actors: Array<Actor>;
-  category: Category;
+  category: Array<Category>;
+  country: Array<Country>;
   id: Scalars['Int']['output'];
   releaseDate: Scalars['Int']['output'];
   title: Scalars['String']['output'];
@@ -101,7 +111,6 @@ export type Query = {
   __typename?: 'Query';
   actor?: Maybe<Actor>;
   actors: Array<Actor>;
-  filterMovies?: Maybe<Array<Movie>>;
   movie?: Maybe<Movie>;
   movies?: Maybe<Array<Movie>>;
   searchActors?: Maybe<Array<Actor>>;
@@ -111,12 +120,6 @@ export type Query = {
 
 export type QueryActorArgs = {
   id: Scalars['Int']['input'];
-};
-
-
-export type QueryFilterMoviesArgs = {
-  category?: InputMaybe<Category>;
-  releaseDate?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -209,7 +212,8 @@ export type ResolversTypes = ResolversObject<{
   Actor: ResolverTypeWrapper<ActorModel>;
   ActorInput: ActorInput;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
-  Category: Category;
+  Category: ResolverTypeWrapper<CategoryModel>;
+  Country: ResolverTypeWrapper<CountryModel>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   Gender: Gender;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
@@ -225,6 +229,8 @@ export type ResolversParentTypes = ResolversObject<{
   Actor: ActorModel;
   ActorInput: ActorInput;
   Boolean: Scalars['Boolean']['output'];
+  Category: CategoryModel;
+  Country: CountryModel;
   DateTime: Scalars['DateTime']['output'];
   Int: Scalars['Int']['output'];
   Movie: MovieModel;
@@ -242,7 +248,17 @@ export type ActorResolvers<ContextType = MyContext, ParentType extends Resolvers
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type CategoryResolvers = EnumResolverSignature<{ ACTION?: any, COMEDY?: any, DRAMA?: any, FANTASY?: any, HORROR?: any, MYSTERY?: any, ROMANCE?: any, THRILLER?: any }, ResolversTypes['Category']>;
+export type CategoryResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type CountryResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Country'] = ResolversParentTypes['Country']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
@@ -252,7 +268,8 @@ export type GenderResolvers = EnumResolverSignature<{ FEMALE?: any, MALE?: any }
 
 export type MovieResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Movie'] = ResolversParentTypes['Movie']> = ResolversObject<{
   actors?: Resolver<Array<ResolversTypes['Actor']>, ParentType, ContextType>;
-  category?: Resolver<ResolversTypes['Category'], ParentType, ContextType>;
+  category?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
+  country?: Resolver<Array<ResolversTypes['Country']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   releaseDate?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -271,7 +288,6 @@ export type MutationResolvers<ContextType = MyContext, ParentType extends Resolv
 export type QueryResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   actor?: Resolver<Maybe<ResolversTypes['Actor']>, ParentType, ContextType, RequireFields<QueryActorArgs, 'id'>>;
   actors?: Resolver<Array<ResolversTypes['Actor']>, ParentType, ContextType>;
-  filterMovies?: Resolver<Maybe<Array<ResolversTypes['Movie']>>, ParentType, ContextType, Partial<QueryFilterMoviesArgs>>;
   movie?: Resolver<Maybe<ResolversTypes['Movie']>, ParentType, ContextType, RequireFields<QueryMovieArgs, 'id'>>;
   movies?: Resolver<Maybe<Array<ResolversTypes['Movie']>>, ParentType, ContextType>;
   searchActors?: Resolver<Maybe<Array<ResolversTypes['Actor']>>, ParentType, ContextType, RequireFields<QuerySearchActorsArgs, 'name'>>;
@@ -280,7 +296,8 @@ export type QueryResolvers<ContextType = MyContext, ParentType extends Resolvers
 
 export type Resolvers<ContextType = MyContext> = ResolversObject<{
   Actor?: ActorResolvers<ContextType>;
-  Category?: CategoryResolvers;
+  Category?: CategoryResolvers<ContextType>;
+  Country?: CountryResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   Gender?: GenderResolvers;
   Movie?: MovieResolvers<ContextType>;

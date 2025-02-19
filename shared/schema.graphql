@@ -8,7 +8,6 @@ type Query {
     movies: [Movie!]
     movie(id: Int!): Movie
     searchMovies(title: String!): [Movie!]
-    filterMovies(category: Category, releaseDate: Int): [Movie!]
 
     actors: [Actor!]!
     actor(id: Int!): Actor
@@ -29,18 +28,17 @@ type Movie{
     id: Int!
     title: String!
     releaseDate: Int!
-    category: Category!
+    category: [Category!]!
+    country: [Country!]!
     actors: [Actor!]!
 }
-enum Category{
-    ACTION
-    COMEDY
-    DRAMA
-    FANTASY
-    HORROR
-    MYSTERY
-    ROMANCE
-    THRILLER
+type Category{
+    id: Int!
+    name: String!
+}
+type Country{
+    id: Int!
+    name: String!
 }
 
 input MovieInput{
@@ -49,6 +47,7 @@ input MovieInput{
     actors: [Int!]
 }
 
+############################################
 type Actor{
     id: Int!
     name: String!
