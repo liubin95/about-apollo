@@ -26,10 +26,12 @@ export interface MyContext {
 const resolvers: Resolvers = {
   Query: {
     movies: async (_, __) => {
-      const movies = await prisma.movie.findMany()
-      console.log(_)
-      console.log(__)
-      return movies
+      return await prisma.movie.findMany({
+        include: {
+          category: true,
+          country: true,
+        },
+      })
     },
     movie: async (_, { id }, { userId, scopes }) => {
       // 在这里添加你的查询逻辑

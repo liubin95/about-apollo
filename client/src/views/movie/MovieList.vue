@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { gql } from '@/__generated__'
+import MovieItem from '@/views/movie/component/MovieItem.vue'
 import { useQuery } from '@vue/apollo-composable'
 import { onMounted } from 'vue'
 
@@ -30,7 +31,7 @@ onMounted(() => {
     <div v-if="loading">Loading...</div>
     <div v-else>
       <p v-for="(movie, index) in result?.movies" :key="index">
-        {{ movie.title }} - {{ movie.releaseDate }} - {{ movie.category }}
+        <MovieItem :item="movie" />
       </p>
     </div>
   </div>
