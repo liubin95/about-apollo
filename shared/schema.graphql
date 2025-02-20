@@ -27,7 +27,7 @@ type Mutation {
 type Movie{
     id: Int!
     title: String!
-    releaseDate: Int!
+    year: Int!
     category: [Category!]!
     country: [Country!]!
     actors: [Actor!]!
@@ -43,7 +43,7 @@ type Country{
 
 input MovieInput{
     title: String!
-    releaseDate: Int!
+    year: Int!
     actors: [Int!]
 }
 

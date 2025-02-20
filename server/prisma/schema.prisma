@@ -33,17 +33,16 @@ model Country {
 }
 
 model Movie {
-  id          Int        @id @default(autoincrement())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  title       String     @unique
-  releaseDate Int
-  category    Category[] @relation("MovieCategory")
-  actors      Actor[]    @relation("MovieActors")
-  country     Country[]  @relation("MovieCountry")
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  title     String     @unique
+  year      Int
+  category  Category[] @relation("MovieCategory")
+  actors    Actor[]    @relation("MovieActors")
+  country   Country[]  @relation("MovieCountry")
 
   @@index([title])
-  @@index([releaseDate])
 }
 
 model Actor {

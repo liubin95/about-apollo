@@ -1,6 +1,5 @@
 import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
-import { Movie } from '@prisma/client'
 import { GraphQLError } from 'graphql'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -34,18 +33,48 @@ const resolvers: Resolvers = {
       })
     },
     movie: async (_, { id }, { userId, scopes }) => {
-      // 在这里添加你的查询逻辑
-
       // 返回电影数据
-      const movie: Movie = await prisma.movie.findFirst({
+      return await prisma.movie.findFirstOrThrow({
         where: {
-          id: 10,
+          id,
+        },
+        include: {
+          category: true,
+          country: true,
+          actors: true,
         },
       })
-
-      return {
-        ...movie,
-      }
+    },
+    actors: async (_, __) => {
+      return await prisma.actor.findMany()
+    },
+    actor: async (_, { id }) => {
+      return await prisma.actor.findFirstOrThrow({
+        where: {
+          id,
+        },
+        include: {
+          movies: true,
+        },
+      })
+    },
+    searchMovies: async (_, { title }) => {
+      return await prisma.movie.findMany({
+        where: {
+          title: {
+            contains: title,
+          },
+        },
+      })
+    },
+    searchActors: async (_, { name }) => {
+      return await prisma.actor.findMany({
+        where: {
+          name: {
+            contains: name,
+          },
+        },
+      })
     },
   },
 }

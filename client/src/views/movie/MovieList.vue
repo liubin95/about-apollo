@@ -8,7 +8,7 @@ const GetMovies = gql(/* GraphQL */ `
   query Movies {
     movies {
       title
-      releaseDate
+      year
       category {
         name
       }

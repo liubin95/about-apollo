@@ -54,14 +54,14 @@ export type Movie = {
   category: Array<Category>;
   country: Array<Country>;
   id: Scalars['Int']['output'];
-  releaseDate: Scalars['Int']['output'];
   title: Scalars['String']['output'];
+  year: Scalars['Int']['output'];
 };
 
 export type MovieInput = {
   actors?: InputMaybe<Array<Scalars['Int']['input']>>;
-  releaseDate: Scalars['Int']['input'];
   title: Scalars['String']['input'];
+  year: Scalars['Int']['input'];
 };
 
 export type Mutation = {
@@ -139,7 +139,7 @@ export type QuerySearchMoviesArgs = {
 export type MoviesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MoviesQuery = { __typename?: 'Query', movies?: Array<{ __typename?: 'Movie', title: string, releaseDate: number, category: Array<{ __typename?: 'Category', name: string }>, country: Array<{ __typename?: 'Country', name: string }> }> | null };
+export type MoviesQuery = { __typename?: 'Query', movies?: Array<{ __typename?: 'Movie', title: string, year: number, category: Array<{ __typename?: 'Category', name: string }>, country: Array<{ __typename?: 'Country', name: string }> }> | null };
 
 
-export const MoviesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Movies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"releaseDate"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"country"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<MoviesQuery, MoviesQueryVariables>;
+export const MoviesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Movies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"year"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"country"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<MoviesQuery, MoviesQueryVariables>;

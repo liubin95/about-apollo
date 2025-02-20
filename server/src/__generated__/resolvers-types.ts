@@ -55,14 +55,14 @@ export type Movie = {
   category: Array<Category>;
   country: Array<Country>;
   id: Scalars['Int']['output'];
-  releaseDate: Scalars['Int']['output'];
   title: Scalars['String']['output'];
+  year: Scalars['Int']['output'];
 };
 
 export type MovieInput = {
   actors?: InputMaybe<Array<Scalars['Int']['input']>>;
-  releaseDate: Scalars['Int']['input'];
   title: Scalars['String']['input'];
+  year: Scalars['Int']['input'];
 };
 
 export type Mutation = {
@@ -271,8 +271,8 @@ export type MovieResolvers<ContextType = MyContext, ParentType extends Resolvers
   category?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
   country?: Resolver<Array<ResolversTypes['Country']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  releaseDate?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
