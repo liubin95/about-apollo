@@ -1,18 +1,21 @@
 import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
+import { mergeTypeDefs } from '@graphql-tools/merge'
+import { glob } from 'glob'
 import { GraphQLError } from 'graphql'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 // This is the file where our generated types live
 // (specified in our `codegen.yml` file)
 import { Resolvers } from './__generated__/resolvers-types.js'
-import { prisma } from './database.js'
+import { movieResolvers } from './Movie.js'
 
 // deal __dirname is not defined
 const __dirname = import.meta.dirname
-//模式是类型定义的集合（因此“ Typedefs”）
-//共同定义针对执行的查询的“形状”
-const typeDefs = readFileSync(join(__dirname, '../../shared/', 'schema.graphql'), 'utf-8')
+// 匹配多个 schema 文件
+const files = glob.sync(join(__dirname, '../../../shared/*.schema.graphql'))
+// 读取所有 schema 文件并合并
+const typeDefs = mergeTypeDefs(files.map((file) => readFileSync(file, 'utf-8')))
 
 export interface MyContext {
   // Add your custom context properties here
@@ -24,58 +27,8 @@ export interface MyContext {
 // 这里定义你的 GraphQL resolvers
 const resolvers: Resolvers = {
   Query: {
-    movies: async (_, __) => {
-      return await prisma.movie.findMany({
-        include: {
-          category: true,
-          country: true,
-        },
-      })
-    },
-    movie: async (_, { id }, { userId, scopes }) => {
-      // 返回电影数据
-      return await prisma.movie.findFirstOrThrow({
-        where: {
-          id,
-        },
-        include: {
-          category: true,
-          country: true,
-          actors: true,
-        },
-      })
-    },
-    actors: async (_, __) => {
-      return await prisma.actor.findMany()
-    },
-    actor: async (_, { id }) => {
-      return await prisma.actor.findFirstOrThrow({
-        where: {
-          id,
-        },
-        include: {
-          movies: true,
-        },
-      })
-    },
-    searchMovies: async (_, { title }) => {
-      return await prisma.movie.findMany({
-        where: {
-          title: {
-            contains: title,
-          },
-        },
-      })
-    },
-    searchActors: async (_, { name }) => {
-      return await prisma.actor.findMany({
-        where: {
-          name: {
-            contains: name,
-          },
-        },
-      })
-    },
+    movies: movieResolvers.movies,
+    movie: movieResolvers.movie,
   },
 }
 

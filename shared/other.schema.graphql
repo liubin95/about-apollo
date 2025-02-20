@@ -1,0 +1,12 @@
+extend type Query {
+    categories(name:String): [Category!]
+    countries(name:String): [Country!]
+}
+type Category{
+    id: Int!
+    name: String!
+}
+type Country{
+    id: Int!
+    name: String!
+}

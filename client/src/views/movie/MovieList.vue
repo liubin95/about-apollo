@@ -5,21 +5,29 @@ import { useQuery } from '@vue/apollo-composable'
 import { onMounted } from 'vue'
 
 const GetMovies = gql(/* GraphQL */ `
-  query Movies {
-    movies {
+  query Movies($filter: MovieFilter) {
+    movies(filter: $filter) {
       title
       year
-      category {
+      country {
         name
       }
-      country {
+      category {
         name
       }
     }
   }
 `)
 
-const { result, loading } = useQuery(GetMovies)
+const { result, loading } = useQuery(GetMovies, {
+  filter: {
+    title: null,
+    actors: null,
+    category: null,
+    country: null,
+    year: null,
+  },
+})
 
 onMounted(() => {
   console.log('MovieList mounted')

@@ -1,0 +1,34 @@
+extend type Query {
+    movies(filter:MovieFilter): [Movie!]
+    movie(id: Int!): Movie
+    searchMovies(title: String!): [Movie!]
+
+}
+extend type Mutation {
+    createMovie(input:MovieInput): Movie!
+    updateMovie(id: Int!, input:MovieInput): Movie!
+    deleteMovie(id: Int!): Int!
+
+}
+type Movie{
+    id: Int!
+    title: String!
+    year: Int!
+    category: [Category!]!
+    country: [Country!]!
+    actors: [Actor!]!
+}
+
+input MovieFilter{
+    title: String
+    year: Int
+    category: [Int!]
+    country: [Int!]
+    actors: [Int!]
+}
+
+input MovieInput{
+    title: String!
+    year: Int!
+    actors: [Int!]
+}

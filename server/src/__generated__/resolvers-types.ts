@@ -59,6 +59,14 @@ export type Movie = {
   year: Scalars['Int']['output'];
 };
 
+export type MovieFilter = {
+  actors?: InputMaybe<Array<Scalars['Int']['input']>>;
+  category?: InputMaybe<Array<Scalars['Int']['input']>>;
+  country?: InputMaybe<Array<Scalars['Int']['input']>>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  year?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type MovieInput = {
   actors?: InputMaybe<Array<Scalars['Int']['input']>>;
   title: Scalars['String']['input'];
@@ -111,6 +119,8 @@ export type Query = {
   __typename?: 'Query';
   actor?: Maybe<Actor>;
   actors: Array<Actor>;
+  categories?: Maybe<Array<Category>>;
+  countries?: Maybe<Array<Country>>;
   movie?: Maybe<Movie>;
   movies?: Maybe<Array<Movie>>;
   searchActors?: Maybe<Array<Actor>>;
@@ -123,8 +133,23 @@ export type QueryActorArgs = {
 };
 
 
+export type QueryCategoriesArgs = {
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryCountriesArgs = {
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type QueryMovieArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type QueryMoviesArgs = {
+  filter?: InputMaybe<MovieFilter>;
 };
 
 
@@ -218,6 +243,7 @@ export type ResolversTypes = ResolversObject<{
   Gender: Gender;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Movie: ResolverTypeWrapper<MovieModel>;
+  MovieFilter: MovieFilter;
   MovieInput: MovieInput;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
@@ -234,6 +260,7 @@ export type ResolversParentTypes = ResolversObject<{
   DateTime: Scalars['DateTime']['output'];
   Int: Scalars['Int']['output'];
   Movie: MovieModel;
+  MovieFilter: MovieFilter;
   MovieInput: MovieInput;
   Mutation: {};
   Query: {};
@@ -288,8 +315,10 @@ export type MutationResolvers<ContextType = MyContext, ParentType extends Resolv
 export type QueryResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   actor?: Resolver<Maybe<ResolversTypes['Actor']>, ParentType, ContextType, RequireFields<QueryActorArgs, 'id'>>;
   actors?: Resolver<Array<ResolversTypes['Actor']>, ParentType, ContextType>;
+  categories?: Resolver<Maybe<Array<ResolversTypes['Category']>>, ParentType, ContextType, Partial<QueryCategoriesArgs>>;
+  countries?: Resolver<Maybe<Array<ResolversTypes['Country']>>, ParentType, ContextType, Partial<QueryCountriesArgs>>;
   movie?: Resolver<Maybe<ResolversTypes['Movie']>, ParentType, ContextType, RequireFields<QueryMovieArgs, 'id'>>;
-  movies?: Resolver<Maybe<Array<ResolversTypes['Movie']>>, ParentType, ContextType>;
+  movies?: Resolver<Maybe<Array<ResolversTypes['Movie']>>, ParentType, ContextType, Partial<QueryMoviesArgs>>;
   searchActors?: Resolver<Maybe<Array<ResolversTypes['Actor']>>, ParentType, ContextType, RequireFields<QuerySearchActorsArgs, 'name'>>;
   searchMovies?: Resolver<Maybe<Array<ResolversTypes['Movie']>>, ParentType, ContextType, RequireFields<QuerySearchMoviesArgs, 'title'>>;
 }>;

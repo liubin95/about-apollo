@@ -58,6 +58,14 @@ export type Movie = {
   year: Scalars['Int']['output'];
 };
 
+export type MovieFilter = {
+  actors?: InputMaybe<Array<Scalars['Int']['input']>>;
+  category?: InputMaybe<Array<Scalars['Int']['input']>>;
+  country?: InputMaybe<Array<Scalars['Int']['input']>>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  year?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type MovieInput = {
   actors?: InputMaybe<Array<Scalars['Int']['input']>>;
   title: Scalars['String']['input'];
@@ -110,6 +118,8 @@ export type Query = {
   __typename?: 'Query';
   actor?: Maybe<Actor>;
   actors: Array<Actor>;
+  categories?: Maybe<Array<Category>>;
+  countries?: Maybe<Array<Country>>;
   movie?: Maybe<Movie>;
   movies?: Maybe<Array<Movie>>;
   searchActors?: Maybe<Array<Actor>>;
@@ -122,8 +132,23 @@ export type QueryActorArgs = {
 };
 
 
+export type QueryCategoriesArgs = {
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryCountriesArgs = {
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+
 export type QueryMovieArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type QueryMoviesArgs = {
+  filter?: InputMaybe<MovieFilter>;
 };
 
 
@@ -136,10 +161,12 @@ export type QuerySearchMoviesArgs = {
   title: Scalars['String']['input'];
 };
 
-export type MoviesQueryVariables = Exact<{ [key: string]: never; }>;
+export type MoviesQueryVariables = Exact<{
+  filter?: InputMaybe<MovieFilter>;
+}>;
 
 
-export type MoviesQuery = { __typename?: 'Query', movies?: Array<{ __typename?: 'Movie', title: string, year: number, category: Array<{ __typename?: 'Category', name: string }>, country: Array<{ __typename?: 'Country', name: string }> }> | null };
+export type MoviesQuery = { __typename?: 'Query', movies?: Array<{ __typename?: 'Movie', title: string, year: number, country: Array<{ __typename?: 'Country', name: string }>, category: Array<{ __typename?: 'Category', name: string }> }> | null };
 
 
-export const MoviesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Movies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"year"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"country"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<MoviesQuery, MoviesQueryVariables>;
+export const MoviesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Movies"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"MovieFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movies"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"year"}},{"kind":"Field","name":{"kind":"Name","value":"country"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<MoviesQuery, MoviesQueryVariables>;

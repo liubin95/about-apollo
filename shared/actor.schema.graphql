@@ -1,0 +1,26 @@
+extend type Query {
+    actors: [Actor!]!
+    actor(id: Int!): Actor
+    searchActors(name: String!): [Actor!]
+}
+extend type Mutation {
+    createActor(input:ActorInput): Actor!
+    updateActor(id: Int!, input:ActorInput): Actor!
+    deleteActor(id: Int!): Int!
+}
+type Actor{
+    id: Int!
+    name: String!
+    gender: Gender!
+    movies: [Movie!]!
+}
+enum Gender {
+    MALE
+    FEMALE
+}
+
+input ActorInput{
+    name: String!
+    gender: Gender!
+    movies: [Int!]
+}

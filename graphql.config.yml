@@ -1,2 +1,2 @@
-schema: shared/schema.graphql
+schema: shared/*.schema.graphql
 documents: '**/*.graphql'
