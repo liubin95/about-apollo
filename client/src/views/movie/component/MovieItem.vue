@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { Movie } from '@/__generated__/graphql.ts'
+import type { MoviesQuery } from '@/__generated__/graphql.ts'
 import type { PropType } from 'vue'
 
 const props = defineProps({
   item: {
-    type: Object as PropType<Movie>, // 使用 PropType 来定义 item 类型
+    type: Object as PropType<NonNullable<MoviesQuery['movies']>[number]>, // 使用 PropType 来定义 item 类型
     required: true,
   },
 })
@@ -14,7 +14,7 @@ console.log(props.item)
 <template>
   <div class="container">
     <span class="title col">{{ item.title }}</span>
-    <span class="col">{{ item.releaseDate }}</span>
+    <span class="col">{{ item.year }}</span>
     <div class="col tag-container">
       <span v-for="it in item.category" class="tag"> {{ it.name }}</span>
     </div>

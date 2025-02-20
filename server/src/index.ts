@@ -8,7 +8,8 @@ import { join } from 'node:path'
 // This is the file where our generated types live
 // (specified in our `codegen.yml` file)
 import { Resolvers } from './__generated__/resolvers-types.js'
-import { movieResolvers } from './Movie.js'
+import { movieResolvers } from './movie.js'
+import { otherResolvers } from './other.js'
 
 // deal __dirname is not defined
 const __dirname = import.meta.dirname
@@ -29,6 +30,8 @@ const resolvers: Resolvers = {
   Query: {
     movies: movieResolvers.movies,
     movie: movieResolvers.movie,
+    categories: otherResolvers.categories,
+    countries: otherResolvers.countries,
   },
 }
 
