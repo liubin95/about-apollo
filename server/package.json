@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "generate": "graphql-codegen-esm --config codegen.yml && prisma generate",
-    "build": "tsc",
+    "build": "tsc && cp ../shared/*.schema.graphql dist/",
     "clean": "rm -rf dist",
     "clean:all": "rm -rf dist node_modules .turbo",
     "dev": "node ./dist/src/index.js",

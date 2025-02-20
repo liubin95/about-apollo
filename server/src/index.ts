@@ -13,7 +13,7 @@ import { movieResolvers } from './Movie.js'
 // deal __dirname is not defined
 const __dirname = import.meta.dirname
 // 匹配多个 schema 文件
-const files = glob.sync(join(__dirname, '../../../shared/*.schema.graphql'))
+const files = glob.sync(join(__dirname, '../*.schema.graphql'))
 // 读取所有 schema 文件并合并
 const typeDefs = mergeTypeDefs(files.map((file) => readFileSync(file, 'utf-8')))
 
