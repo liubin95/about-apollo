@@ -10,7 +10,9 @@
     "clean": "rm -rf dist",
     "clean:all": "rm -rf dist node_modules .turbo",
     "dev": "node ./dist/index.js",
-    "format": "prettier --write src/ --ignore-path ../.prettierignore --config ../.prettierrc.json"
+    "format": "prettier --write src/ --ignore-path ../.prettierignore --config ../.prettierrc.json",
+    "db:push": "prisma db push",
+    "db:data": "tsx bin/loadData.ts"
   },
   "keywords": [],
   "author": "",
