@@ -40,6 +40,7 @@ class MovieResolvers {
       include: {
         category: true,
         country: true,
+        actors: true,
       },
     })
   }

@@ -1,6 +1,9 @@
+input NameFilter{
+    name: String
+}
 extend type Query {
-    categories(name:String): [Category!]
-    countries(name:String): [Country!]
+    categories(filter:NameFilter): [Category!]
+    countries(filter:NameFilter): [Country!]
 }
 type Category{
     id: Int!

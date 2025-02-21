@@ -10,6 +10,7 @@
       ]
     },
     "generate": {
+      "cache": false,
       "outputs": [
         "src/__generated__/**"
       ]

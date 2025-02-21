@@ -2,8 +2,8 @@ import { QueryResolvers } from './__generated__/resolvers-types.js'
 import { prisma } from './database.js'
 
 class OtherResolvers {
-  categories: QueryResolvers['categories'] = (_parent, { name }, _context) => {
-    const nameFilter = name ? { contains: name } : undefined
+  categories: QueryResolvers['categories'] = (_parent, { filter }, _context) => {
+    const nameFilter = filter.name ? { contains: filter.name } : undefined
     // 构建查询条件
     const where = {
       AND: [nameFilter && { name: nameFilter }].filter(Boolean), // 去掉 undefined 的条件
@@ -12,8 +12,8 @@ class OtherResolvers {
       where,
     })
   }
-  countries: QueryResolvers['countries'] = (_parent, { name }, _context) => {
-    const nameFilter = name ? { contains: name } : undefined
+  countries: QueryResolvers['countries'] = (_parent, { filter }, _context) => {
+    const nameFilter = filter.name ? { contains: filter.name } : undefined
     // 构建查询条件
     const where = {
       AND: [nameFilter && { name: nameFilter }].filter(Boolean), // 去掉 undefined 的条件

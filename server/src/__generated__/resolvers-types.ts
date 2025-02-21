@@ -115,6 +115,10 @@ export type MutationUpdateMovieArgs = {
   input?: InputMaybe<MovieInput>;
 };
 
+export type NameFilter = {
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   actor?: Maybe<Actor>;
@@ -134,12 +138,12 @@ export type QueryActorArgs = {
 
 
 export type QueryCategoriesArgs = {
-  name?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<NameFilter>;
 };
 
 
 export type QueryCountriesArgs = {
-  name?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<NameFilter>;
 };
 
 
@@ -246,6 +250,7 @@ export type ResolversTypes = ResolversObject<{
   MovieFilter: MovieFilter;
   MovieInput: MovieInput;
   Mutation: ResolverTypeWrapper<{}>;
+  NameFilter: NameFilter;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
 }>;
@@ -263,6 +268,7 @@ export type ResolversParentTypes = ResolversObject<{
   MovieFilter: MovieFilter;
   MovieInput: MovieInput;
   Mutation: {};
+  NameFilter: NameFilter;
   Query: {};
   String: Scalars['String']['output'];
 }>;

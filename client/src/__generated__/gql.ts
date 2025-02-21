@@ -14,10 +14,14 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query Movies($filter: MovieFilter, $category: String, $country: String) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n    categories(name: $category) {\n      id\n      name\n    }\n    countries(name: $country) {\n      id\n      name\n    }\n  }\n": typeof types.MoviesDocument,
+    "\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n  }\n": typeof types.MoviesDocument,
+    "\n  query Countries($country: NameFilter) {\n    countries(filter: $country) {\n      id\n      name\n    }\n  }\n": typeof types.CountriesDocument,
+    "\n  query Categories($category: NameFilter) {\n    categories(filter: $category) {\n      id\n      name\n    }\n  }\n": typeof types.CategoriesDocument,
 };
 const documents: Documents = {
-    "\n  query Movies($filter: MovieFilter, $category: String, $country: String) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n    categories(name: $category) {\n      id\n      name\n    }\n    countries(name: $country) {\n      id\n      name\n    }\n  }\n": types.MoviesDocument,
+    "\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n  }\n": types.MoviesDocument,
+    "\n  query Countries($country: NameFilter) {\n    countries(filter: $country) {\n      id\n      name\n    }\n  }\n": types.CountriesDocument,
+    "\n  query Categories($category: NameFilter) {\n    categories(filter: $category) {\n      id\n      name\n    }\n  }\n": types.CategoriesDocument,
 };
 
 /**
@@ -37,7 +41,15 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query Movies($filter: MovieFilter, $category: String, $country: String) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n    categories(name: $category) {\n      id\n      name\n    }\n    countries(name: $country) {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query Movies($filter: MovieFilter, $category: String, $country: String) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n    categories(name: $category) {\n      id\n      name\n    }\n    countries(name: $country) {\n      id\n      name\n    }\n  }\n"];
+export function gql(source: "\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query Countries($country: NameFilter) {\n    countries(filter: $country) {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query Countries($country: NameFilter) {\n    countries(filter: $country) {\n      id\n      name\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query Categories($category: NameFilter) {\n    categories(filter: $category) {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query Categories($category: NameFilter) {\n    categories(filter: $category) {\n      id\n      name\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

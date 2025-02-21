@@ -5,7 +5,7 @@ import { useQuery } from '@vue/apollo-composable'
 import { onMounted, ref } from 'vue'
 
 const GetMovies = gql(/* GraphQL */ `
-  query Movies($filter: MovieFilter, $category: String, $country: String) {
+  query Movies($filter: MovieFilter) {
     movies(filter: $filter) {
       id
       title
@@ -17,11 +17,19 @@ const GetMovies = gql(/* GraphQL */ `
         name
       }
     }
-    categories(name: $category) {
+  }
+`)
+const GetCountries = gql(/* GraphQL */ `
+  query Countries($country: NameFilter) {
+    countries(filter: $country) {
       id
       name
     }
-    countries(name: $country) {
+  }
+`)
+const GetCategories = gql(/* GraphQL */ `
+  query Categories($category: NameFilter) {
+    categories(filter: $category) {
       id
       name
     }
@@ -30,19 +38,35 @@ const GetMovies = gql(/* GraphQL */ `
 const filter = ref({
   title: null,
   actors: null,
-  category: null,
-  country: null,
+  category: [],
+  country: [],
   year: null,
 })
-const filterCountry = ref('')
-const filterCategory = ref('')
+const filterCountry = ref({
+  name: null,
+})
+const filterCategory = ref({
+  name: null,
+})
 
 const { result, loading } = useQuery(
   GetMovies,
   {
     filter: filter.value,
-    category: filterCategory.value,
+  },
+  { debounce: 500 },
+)
+const { result: countries } = useQuery(
+  GetCountries,
+  {
     country: filterCountry.value,
+  },
+  { debounce: 500 },
+)
+const { result: categories } = useQuery(
+  GetCategories,
+  {
+    category: filterCategory.value,
   },
   { debounce: 500 },
 )
@@ -58,19 +82,29 @@ onMounted(() => {
 
     <div>
       <h3>选择国家</h3>
-      <input v-model="filterCountry" placeholder="输入国家" />
-      <div v-for="country in result?.countries" :key="country.id">
-        <input type="checkbox" :value="country.id" v-model="filter.country" />
-        {{ country.name }}
+      <input v-model="filterCountry.name" placeholder="输入国家" />
+      <div v-for="country in countries?.countries" :key="country.id">
+        <input
+          :id="'country-' + country.id"
+          type="checkbox"
+          :value="country.id"
+          v-model="filter.country"
+        />
+        <label :for="'country-' + country.id"> {{ country.name }}</label>
       </div>
     </div>
 
     <div>
       <h3>选择类别</h3>
-      <input v-model="filterCategory" placeholder="输入类别" />
-      <div v-for="category in result?.categories" :key="category.id">
-        <input type="checkbox" :value="category.id" v-model="filter.category" />
-        {{ category.name }}
+      <input v-model="filterCategory.name" placeholder="输入类别" />
+      <div v-for="category in categories?.categories" :key="category.id">
+        <input
+          :id="'category-' + category.id"
+          type="checkbox"
+          :value="category.id"
+          v-model="filter.category"
+        />
+        <label :for="'category-' + category.id">{{ category.name }}</label>
       </div>
     </div>
     <input v-model="filter.title" placeholder="输入名称" />
