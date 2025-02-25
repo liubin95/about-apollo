@@ -12,11 +12,12 @@ generates:
     config:
       useIndexSignature: true
       # More on this below!
-      contextType: "../index.js#MyContext"
+      contextType: "../auth.js#MyContext"
       mappers:
         Movie: "@prisma/client#Movie as MovieModel"
         Actor: "@prisma/client#Actor as ActorModel"
         Category: "@prisma/client#Category as CategoryModel"
         Country: "@prisma/client#Country as CountryModel"
+        User: "@prisma/client#User as UserModel"
       enumValues:
         Gender: "@prisma/client#Gender"

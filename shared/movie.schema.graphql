@@ -1,8 +1,6 @@
 extend type Query {
     movies(filter:MovieFilter): [Movie!]
     movie(id: Int!): Movie
-    searchMovies(title: String!): [Movie!]
-
 }
 extend type Mutation {
     createMovie(input:MovieInput): Movie!

@@ -6,4 +6,21 @@ schema {
 type Query
 type Mutation
 
+type User {
+    id: Int!
+    name: String!
+    email: String!
+}
+type Token {
+    token: String!
+    refreshToken: String!
+}
 
+extend type Query {
+    me: User
+}
+
+extend type Mutation {
+    login(email: String!, password: String!): Token
+    refreshToken(refreshToken: String!): Token
+}

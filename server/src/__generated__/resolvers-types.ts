@@ -1,7 +1,7 @@
 import { Gender } from '@prisma/client';
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { Movie as MovieModel, Actor as ActorModel, Category as CategoryModel, Country as CountryModel } from '@prisma/client';
-import { MyContext } from '../index.js';
+import { Movie as MovieModel, Actor as ActorModel, Category as CategoryModel, Country as CountryModel, User as UserModel } from '@prisma/client';
+import { MyContext } from '../auth.js';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -79,6 +79,8 @@ export type Mutation = {
   createMovie: Movie;
   deleteActor: Scalars['Int']['output'];
   deleteMovie: Scalars['Int']['output'];
+  login?: Maybe<Token>;
+  refreshToken?: Maybe<Token>;
   updateActor: Actor;
   updateMovie: Movie;
 };
@@ -104,6 +106,17 @@ export type MutationDeleteMovieArgs = {
 };
 
 
+export type MutationLoginArgs = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
+
+export type MutationRefreshTokenArgs = {
+  refreshToken: Scalars['String']['input'];
+};
+
+
 export type MutationUpdateActorArgs = {
   id: Scalars['Int']['input'];
   input?: InputMaybe<ActorInput>;
@@ -125,10 +138,10 @@ export type Query = {
   actors: Array<Actor>;
   categories?: Maybe<Array<Category>>;
   countries?: Maybe<Array<Country>>;
+  me?: Maybe<User>;
   movie?: Maybe<Movie>;
   movies?: Maybe<Array<Movie>>;
   searchActors?: Maybe<Array<Actor>>;
-  searchMovies?: Maybe<Array<Movie>>;
 };
 
 
@@ -161,9 +174,17 @@ export type QuerySearchActorsArgs = {
   name: Scalars['String']['input'];
 };
 
+export type Token = {
+  __typename?: 'Token';
+  refreshToken: Scalars['String']['output'];
+  token: Scalars['String']['output'];
+};
 
-export type QuerySearchMoviesArgs = {
-  title: Scalars['String']['input'];
+export type User = {
+  __typename?: 'User';
+  email: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -253,6 +274,8 @@ export type ResolversTypes = ResolversObject<{
   NameFilter: NameFilter;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  Token: ResolverTypeWrapper<Token>;
+  User: ResolverTypeWrapper<UserModel>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -271,6 +294,8 @@ export type ResolversParentTypes = ResolversObject<{
   NameFilter: NameFilter;
   Query: {};
   String: Scalars['String']['output'];
+  Token: Token;
+  User: UserModel;
 }>;
 
 export type ActorResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Actor'] = ResolversParentTypes['Actor']> = ResolversObject<{
@@ -314,6 +339,8 @@ export type MutationResolvers<ContextType = MyContext, ParentType extends Resolv
   createMovie?: Resolver<ResolversTypes['Movie'], ParentType, ContextType, Partial<MutationCreateMovieArgs>>;
   deleteActor?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<MutationDeleteActorArgs, 'id'>>;
   deleteMovie?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<MutationDeleteMovieArgs, 'id'>>;
+  login?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
+  refreshToken?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationRefreshTokenArgs, 'refreshToken'>>;
   updateActor?: Resolver<ResolversTypes['Actor'], ParentType, ContextType, RequireFields<MutationUpdateActorArgs, 'id'>>;
   updateMovie?: Resolver<ResolversTypes['Movie'], ParentType, ContextType, RequireFields<MutationUpdateMovieArgs, 'id'>>;
 }>;
@@ -323,10 +350,23 @@ export type QueryResolvers<ContextType = MyContext, ParentType extends Resolvers
   actors?: Resolver<Array<ResolversTypes['Actor']>, ParentType, ContextType>;
   categories?: Resolver<Maybe<Array<ResolversTypes['Category']>>, ParentType, ContextType, Partial<QueryCategoriesArgs>>;
   countries?: Resolver<Maybe<Array<ResolversTypes['Country']>>, ParentType, ContextType, Partial<QueryCountriesArgs>>;
+  me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   movie?: Resolver<Maybe<ResolversTypes['Movie']>, ParentType, ContextType, RequireFields<QueryMovieArgs, 'id'>>;
   movies?: Resolver<Maybe<Array<ResolversTypes['Movie']>>, ParentType, ContextType, Partial<QueryMoviesArgs>>;
   searchActors?: Resolver<Maybe<Array<ResolversTypes['Actor']>>, ParentType, ContextType, RequireFields<QuerySearchActorsArgs, 'name'>>;
-  searchMovies?: Resolver<Maybe<Array<ResolversTypes['Movie']>>, ParentType, ContextType, RequireFields<QuerySearchMoviesArgs, 'title'>>;
+}>;
+
+export type TokenResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = ResolversObject<{
+  refreshToken?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type UserResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = MyContext> = ResolversObject<{
@@ -338,5 +378,7 @@ export type Resolvers<ContextType = MyContext> = ResolversObject<{
   Movie?: MovieResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Token?: TokenResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
 }>;
 

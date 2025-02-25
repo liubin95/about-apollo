@@ -53,3 +53,11 @@ model Actor {
   gender    Gender   @default(MALE)
   movies    Movie[]  @relation("MovieActors")
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique
+  password  String
+}
