@@ -14,11 +14,15 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "\n    mutation refreshToken($refreshToken: String!) {\n      refreshToken(refreshToken: $refreshToken) {\n        refreshToken\n        token\n      }\n    }\n  ": typeof types.RefreshTokenDocument,
+    "\n    mutation Login($form: LoginInput!) {\n      login(login: $form) {\n        token\n        refreshToken\n      }\n    }\n  ": typeof types.LoginDocument,
     "\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n  }\n": typeof types.MoviesDocument,
     "\n  query Countries($country: NameFilter) {\n    countries(filter: $country) {\n      id\n      name\n    }\n  }\n": typeof types.CountriesDocument,
     "\n  query Categories($category: NameFilter) {\n    categories(filter: $category) {\n      id\n      name\n    }\n  }\n": typeof types.CategoriesDocument,
 };
 const documents: Documents = {
+    "\n    mutation refreshToken($refreshToken: String!) {\n      refreshToken(refreshToken: $refreshToken) {\n        refreshToken\n        token\n      }\n    }\n  ": types.RefreshTokenDocument,
+    "\n    mutation Login($form: LoginInput!) {\n      login(login: $form) {\n        token\n        refreshToken\n      }\n    }\n  ": types.LoginDocument,
     "\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n  }\n": types.MoviesDocument,
     "\n  query Countries($country: NameFilter) {\n    countries(filter: $country) {\n      id\n      name\n    }\n  }\n": types.CountriesDocument,
     "\n  query Categories($category: NameFilter) {\n    categories(filter: $category) {\n      id\n      name\n    }\n  }\n": types.CategoriesDocument,
@@ -38,6 +42,14 @@ const documents: Documents = {
  */
 export function gql(source: string): unknown;
 
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    mutation refreshToken($refreshToken: String!) {\n      refreshToken(refreshToken: $refreshToken) {\n        refreshToken\n        token\n      }\n    }\n  "): (typeof documents)["\n    mutation refreshToken($refreshToken: String!) {\n      refreshToken(refreshToken: $refreshToken) {\n        refreshToken\n        token\n      }\n    }\n  "];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    mutation Login($form: LoginInput!) {\n      login(login: $form) {\n        token\n        refreshToken\n      }\n    }\n  "): (typeof documents)["\n    mutation Login($form: LoginInput!) {\n      login(login: $form) {\n        token\n        refreshToken\n      }\n    }\n  "];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

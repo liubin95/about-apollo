@@ -17,10 +17,13 @@ type Token {
 }
 
 extend type Query {
-    me: User
+    me: User!
 }
-
+input LoginInput {
+    email: String!
+    password: String!
+}
 extend type Mutation {
-    login(email: String!, password: String!): Token
-    refreshToken(refreshToken: String!): Token
+    login(login:LoginInput!): Token!
+    refreshToken(refreshToken: String!): Token!
 }

@@ -49,6 +49,11 @@ export type Country = {
 
 export { Gender };
 
+export type LoginInput = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
 export type Movie = {
   __typename?: 'Movie';
   actors: Array<Actor>;
@@ -79,8 +84,8 @@ export type Mutation = {
   createMovie: Movie;
   deleteActor: Scalars['Int']['output'];
   deleteMovie: Scalars['Int']['output'];
-  login?: Maybe<Token>;
-  refreshToken?: Maybe<Token>;
+  login: Token;
+  refreshToken: Token;
   updateActor: Actor;
   updateMovie: Movie;
 };
@@ -107,8 +112,7 @@ export type MutationDeleteMovieArgs = {
 
 
 export type MutationLoginArgs = {
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  login: LoginInput;
 };
 
 
@@ -138,7 +142,7 @@ export type Query = {
   actors: Array<Actor>;
   categories?: Maybe<Array<Category>>;
   countries?: Maybe<Array<Country>>;
-  me?: Maybe<User>;
+  me: User;
   movie?: Maybe<Movie>;
   movies?: Maybe<Array<Movie>>;
   searchActors?: Maybe<Array<Actor>>;
@@ -267,6 +271,7 @@ export type ResolversTypes = ResolversObject<{
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   Gender: Gender;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  LoginInput: LoginInput;
   Movie: ResolverTypeWrapper<MovieModel>;
   MovieFilter: MovieFilter;
   MovieInput: MovieInput;
@@ -287,6 +292,7 @@ export type ResolversParentTypes = ResolversObject<{
   Country: CountryModel;
   DateTime: Scalars['DateTime']['output'];
   Int: Scalars['Int']['output'];
+  LoginInput: LoginInput;
   Movie: MovieModel;
   MovieFilter: MovieFilter;
   MovieInput: MovieInput;
@@ -339,8 +345,8 @@ export type MutationResolvers<ContextType = MyContext, ParentType extends Resolv
   createMovie?: Resolver<ResolversTypes['Movie'], ParentType, ContextType, Partial<MutationCreateMovieArgs>>;
   deleteActor?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<MutationDeleteActorArgs, 'id'>>;
   deleteMovie?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<MutationDeleteMovieArgs, 'id'>>;
-  login?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
-  refreshToken?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationRefreshTokenArgs, 'refreshToken'>>;
+  login?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'login'>>;
+  refreshToken?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationRefreshTokenArgs, 'refreshToken'>>;
   updateActor?: Resolver<ResolversTypes['Actor'], ParentType, ContextType, RequireFields<MutationUpdateActorArgs, 'id'>>;
   updateMovie?: Resolver<ResolversTypes['Movie'], ParentType, ContextType, RequireFields<MutationUpdateMovieArgs, 'id'>>;
 }>;
@@ -350,7 +356,7 @@ export type QueryResolvers<ContextType = MyContext, ParentType extends Resolvers
   actors?: Resolver<Array<ResolversTypes['Actor']>, ParentType, ContextType>;
   categories?: Resolver<Maybe<Array<ResolversTypes['Category']>>, ParentType, ContextType, Partial<QueryCategoriesArgs>>;
   countries?: Resolver<Maybe<Array<ResolversTypes['Country']>>, ParentType, ContextType, Partial<QueryCountriesArgs>>;
-  me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  me?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   movie?: Resolver<Maybe<ResolversTypes['Movie']>, ParentType, ContextType, RequireFields<QueryMovieArgs, 'id'>>;
   movies?: Resolver<Maybe<Array<ResolversTypes['Movie']>>, ParentType, ContextType, Partial<QueryMoviesArgs>>;
   searchActors?: Resolver<Maybe<Array<ResolversTypes['Actor']>>, ParentType, ContextType, RequireFields<QuerySearchActorsArgs, 'name'>>;

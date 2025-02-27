@@ -63,7 +63,8 @@ class Auth {
     }
   }
 
-  login: MutationResolvers['login'] = async (_parent, { email, password }) => {
+  login: MutationResolvers['login'] = async (_parent, { login }) => {
+    const { email, password } = login
     const user = await prisma.user.findUnique({
       where: { email },
     })

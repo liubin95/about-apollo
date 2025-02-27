@@ -10,12 +10,21 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/movie',
+      name: 'movie',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/movie/MovieList.vue'),
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/login/Login.vue'),
+      // 添加 props 配置，允许将路由参数作为组件的 props
+      props: (route) => ({
+        redirect: route.query.redirect,
+      }),
     },
   ],
 })
