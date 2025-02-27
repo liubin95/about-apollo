@@ -26,6 +26,12 @@ const router = createRouter({
         redirect: route.query.redirect,
       }),
     },
+    {
+      path: '/movie/:id',
+      name: 'movie-detail',
+      component: () => import('../views/movie/component/MovieDetail.vue'),
+      props: true,
+    },
   ],
 })
 

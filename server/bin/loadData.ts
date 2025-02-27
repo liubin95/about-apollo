@@ -23,13 +23,13 @@ async function loadMovieActor() {
         data: {
           title: item.title,
           year: parseInt(item.year),
-          country: {
+          countries: {
             connectOrCreate: item.country.map((country) => ({
               where: { name: country },
               create: { name: country },
             })),
           },
-          category: {
+          categories: {
             connectOrCreate: item.category.map((category) => ({
               where: { name: category },
               create: { name: category },

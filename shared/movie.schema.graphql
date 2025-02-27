@@ -12,16 +12,16 @@ type Movie{
     id: Int!
     title: String!
     year: Int!
-    category: [Category!]!
-    country: [Country!]!
+    categories: [Category!]!
+    countries: [Country!]!
     actors: [Actor!]!
 }
 
 input MovieFilter{
     title: String
     year: Int
-    category: [Int!]
-    country: [Int!]
+    categories: [Int!]
+    countries: [Int!]
     actors: [Int!]
 }
 

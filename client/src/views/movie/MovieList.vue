@@ -10,10 +10,12 @@ const GetMovies = gql(/* GraphQL */ `
       id
       title
       year
-      country {
+      countries {
+        id
         name
       }
-      category {
+      categories {
+        id
         name
       }
     }
@@ -38,8 +40,8 @@ const GetCategories = gql(/* GraphQL */ `
 const filter = ref({
   title: null,
   actors: null,
-  category: [],
-  country: [],
+  categories: [],
+  countries: [],
   year: null,
 })
 const filterCountry = ref({
@@ -81,11 +83,7 @@ onMounted(() => {
     <!-- 筛选器部分 -->
     <div class="filters-section">
       <div class="search-box">
-        <input
-          v-model="filter.title"
-          placeholder="搜索电影名称..."
-          class="search-input"
-        />
+        <input v-model="filter.title" placeholder="搜索电影名称..." class="search-input" />
       </div>
 
       <!-- 筛选器组 -->
@@ -94,22 +92,14 @@ onMounted(() => {
         <div class="filter-group">
           <h3 class="filter-title">按国家筛选</h3>
           <div class="filter-search">
-            <input
-              v-model="filterCountry.name"
-              placeholder="搜索国家..."
-              class="filter-input"
-            />
+            <input v-model="filterCountry.name" placeholder="搜索国家..." class="filter-input" />
           </div>
           <div class="checkbox-group">
-            <label
-              v-for="country in countries?.countries"
-              :key="country.id"
-              class="checkbox-label"
-            >
+            <label v-for="country in countries?.countries" :key="country.id" class="checkbox-label">
               <input
                 type="checkbox"
                 :value="country.id"
-                v-model="filter.country"
+                v-model="filter.countries"
                 class="checkbox-input"
               />
               <span class="checkbox-text">{{ country.name }}</span>
@@ -121,11 +111,7 @@ onMounted(() => {
         <div class="filter-group">
           <h3 class="filter-title">按类别筛选</h3>
           <div class="filter-search">
-            <input
-              v-model="filterCategory.name"
-              placeholder="搜索类别..."
-              class="filter-input"
-            />
+            <input v-model="filterCategory.name" placeholder="搜索类别..." class="filter-input" />
           </div>
           <div class="checkbox-group">
             <label
@@ -136,7 +122,7 @@ onMounted(() => {
               <input
                 type="checkbox"
                 :value="category.id"
-                v-model="filter.category"
+                v-model="filter.categories"
                 class="checkbox-input"
               />
               <span class="checkbox-text">{{ category.name }}</span>
@@ -293,8 +279,12 @@ onMounted(() => {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* 响应式设计 */

@@ -16,16 +16,18 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
 type Documents = {
     "\n    mutation refreshToken($refreshToken: String!) {\n      refreshToken(refreshToken: $refreshToken) {\n        refreshToken\n        token\n      }\n    }\n  ": typeof types.RefreshTokenDocument,
     "\n    mutation Login($form: LoginInput!) {\n      login(login: $form) {\n        token\n        refreshToken\n      }\n    }\n  ": typeof types.LoginDocument,
-    "\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n  }\n": typeof types.MoviesDocument,
+    "\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      countries {\n        id\n        name\n      }\n      categories {\n        id\n        name\n      }\n    }\n  }\n": typeof types.MoviesDocument,
     "\n  query Countries($country: NameFilter) {\n    countries(filter: $country) {\n      id\n      name\n    }\n  }\n": typeof types.CountriesDocument,
     "\n  query Categories($category: NameFilter) {\n    categories(filter: $category) {\n      id\n      name\n    }\n  }\n": typeof types.CategoriesDocument,
+    "\n  query MovieDetail($id: Int!) {\n    movie(id: $id) {\n      id\n      title\n      year\n      actors {\n        id\n        name\n      }\n      countries {\n        id\n        name\n      }\n      categories {\n        id\n        name\n      }\n    }\n  }\n": typeof types.MovieDetailDocument,
 };
 const documents: Documents = {
     "\n    mutation refreshToken($refreshToken: String!) {\n      refreshToken(refreshToken: $refreshToken) {\n        refreshToken\n        token\n      }\n    }\n  ": types.RefreshTokenDocument,
     "\n    mutation Login($form: LoginInput!) {\n      login(login: $form) {\n        token\n        refreshToken\n      }\n    }\n  ": types.LoginDocument,
-    "\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n  }\n": types.MoviesDocument,
+    "\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      countries {\n        id\n        name\n      }\n      categories {\n        id\n        name\n      }\n    }\n  }\n": types.MoviesDocument,
     "\n  query Countries($country: NameFilter) {\n    countries(filter: $country) {\n      id\n      name\n    }\n  }\n": types.CountriesDocument,
     "\n  query Categories($category: NameFilter) {\n    categories(filter: $category) {\n      id\n      name\n    }\n  }\n": types.CategoriesDocument,
+    "\n  query MovieDetail($id: Int!) {\n    movie(id: $id) {\n      id\n      title\n      year\n      actors {\n        id\n        name\n      }\n      countries {\n        id\n        name\n      }\n      categories {\n        id\n        name\n      }\n    }\n  }\n": types.MovieDetailDocument,
 };
 
 /**
@@ -53,7 +55,7 @@ export function gql(source: "\n    mutation Login($form: LoginInput!) {\n      l
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      country {\n        name\n      }\n      category {\n        name\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      countries {\n        id\n        name\n      }\n      categories {\n        id\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query Movies($filter: MovieFilter) {\n    movies(filter: $filter) {\n      id\n      title\n      year\n      countries {\n        id\n        name\n      }\n      categories {\n        id\n        name\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -62,6 +64,10 @@ export function gql(source: "\n  query Countries($country: NameFilter) {\n    co
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query Categories($category: NameFilter) {\n    categories(filter: $category) {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query Categories($category: NameFilter) {\n    categories(filter: $category) {\n      id\n      name\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query MovieDetail($id: Int!) {\n    movie(id: $id) {\n      id\n      title\n      year\n      actors {\n        id\n        name\n      }\n      countries {\n        id\n        name\n      }\n      categories {\n        id\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query MovieDetail($id: Int!) {\n    movie(id: $id) {\n      id\n      title\n      year\n      actors {\n        id\n        name\n      }\n      countries {\n        id\n        name\n      }\n      categories {\n        id\n        name\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

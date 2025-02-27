@@ -7,20 +7,20 @@ class MovieResolvers {
     // 提取过滤条件
     const titleFilter = filter.title ? { contains: filter.title } : undefined
     const yearFilter = filter.year ? { equals: filter.year } : undefined
-    const categoryFilter = filter.category?.length
+    const categoryFilter = filter.categories?.length
       ? {
           some: {
             id: {
-              in: filter.category.map((category) => category),
+              in: filter.categories.map((category) => category),
             },
           },
         }
       : undefined
-    const countryFilter = filter.country?.length
+    const countryFilter = filter.countries?.length
       ? {
           some: {
             id: {
-              in: filter.country.map((country) => country),
+              in: filter.countries.map((country) => country),
             },
           },
         }
@@ -31,15 +31,15 @@ class MovieResolvers {
       AND: [
         titleFilter && { title: titleFilter },
         yearFilter && { year: yearFilter },
-        categoryFilter && { category: categoryFilter },
-        countryFilter && { country: countryFilter },
+        categoryFilter && { categories: categoryFilter },
+        countryFilter && { countries: countryFilter },
       ].filter(Boolean), // 去掉 undefined 的条件
     }
     return await prisma.movie.findMany({
       where,
       include: {
-        category: true,
-        country: true,
+        categories: true,
+        countries: true,
         actors: true,
       },
     })
@@ -48,8 +48,9 @@ class MovieResolvers {
     return await prisma.movie.findUnique({
       where: { id },
       include: {
-        category: true,
-        country: true,
+        categories: true,
+        countries: true,
+        actors: true,
       },
     })
   }

@@ -57,8 +57,8 @@ export type LoginInput = {
 export type Movie = {
   __typename?: 'Movie';
   actors: Array<Actor>;
-  category: Array<Category>;
-  country: Array<Country>;
+  categories: Array<Category>;
+  countries: Array<Country>;
   id: Scalars['Int']['output'];
   title: Scalars['String']['output'];
   year: Scalars['Int']['output'];
@@ -66,8 +66,8 @@ export type Movie = {
 
 export type MovieFilter = {
   actors?: InputMaybe<Array<Scalars['Int']['input']>>;
-  category?: InputMaybe<Array<Scalars['Int']['input']>>;
-  country?: InputMaybe<Array<Scalars['Int']['input']>>;
+  categories?: InputMaybe<Array<Scalars['Int']['input']>>;
+  countries?: InputMaybe<Array<Scalars['Int']['input']>>;
   title?: InputMaybe<Scalars['String']['input']>;
   year?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -332,8 +332,8 @@ export type GenderResolvers = EnumResolverSignature<{ FEMALE?: any, MALE?: any }
 
 export type MovieResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Movie'] = ResolversParentTypes['Movie']> = ResolversObject<{
   actors?: Resolver<Array<ResolversTypes['Actor']>, ParentType, ContextType>;
-  category?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
-  country?: Resolver<Array<ResolversTypes['Country']>, ParentType, ContextType>;
+  categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>;
+  countries?: Resolver<Array<ResolversTypes['Country']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
